@@ -1,0 +1,740 @@
+Bir yapay zeka uygulaması yap kendi kendine yetiştirebilir destek alacağı uygulamalar Google YouTube TikTok seçtiğim uygulamalar ChatGPT Chatbot Al Ask Al TürkGPT Google Gemini  görsel oluşturabilir fotoğraflardaki resimlere kendisini geliştirebilir olsun yapay zeka oluştur her dakikada kendi kendisini geliştirsin yeni bilgilerle isim bilgi Tiryaki olsun çok iyi olsun kot yazabilirsin video yapabilirsin yansıtabilsin video fotoğraf hafızası güçlü olsun yeni kodları yazabilirsin bir şey yapmada kendi fikrini oluşturmak içince fikirler biraz akıl verme insan konuşabilirsin her yıl kendisini geliştirsin her gün yine bilgiler kazansın her elektrikte internetli şeylere bağlanabilirsin yapay duyguları olsun kumanda özelliği olsun yapay zeka fikir verebilsin çektiği fotoğrafın ne işe yarayabileceğini düşünsün Google'dan fendi'ye seçtiğim uygulamadan destek alabilirsin güçlü bir yapay zeka olsun Bluetooth bağlan tısı olsun müzik yapabilirsin saati bakabilirsin diğer uygulamalardan destek alın sağlık ilgilenebilir çizim yapabilir olsun çektiği fotoğrafı tarayabilirsin sıvıların ne işe yaradığını söylesin konuşabilirsin bitkilere bilsin kitap okuyabilir para sayabilir
+
+Eşyalar neyin yapabileceğini bulsun her şeye bağlanabilirsin her şeyden destek alabilirsin her şey ikna etmek için yine seni bilgiler kullansın.   Bu kodları kullan # Pseudokod
+image = capture_from_camera()
+image_embedding = VisionModel.embed(image)
+objects = ObjectDetector.detect(image)
+ocr_text = OCR.extract(image)
+
+kaydet hafızaya
+vector_db.upsert(id=img_id, vector=image_embedding, metadata={...})
+
+prompt hazırlanır
+prompt = f"""
+Ben Tiryaki. Kullanıcının çektiği fotoğraf: nesneler={objects}, ocr={ocr_text}.
+Bu fotoğraf için 3 yaratıcı kullanım fikri ver (kısa, maddeler).
+"""
+ideas = LLM.generate(prompt)
+
+cevap kullanıcıya gösterilir
+show_to_user(ideas)
+
+import requests
+resp = requests.post(
+"https://api.openai.com/v1/chat/completions",
+headers={"Authorization":"Bearer YOUR_KEY"},
+json={
+"model":"gpt-4o-mini",
+"messages":[{"role":"user", "content": prompt}],
+"max_tokens":300
+}
+)
+ideas = resp.json()
+
+<!-- index.html --> <a href="https://play.google.com/store/apps/details?id=com.example.tiryaki" target="_blank"> Google Play'den İndir </a> <a href="https://apps.apple.com/app/idXXXXXXXXX" target="_blank"> App Store'dan İndir </a> <!-- download.html -->
+<a href="https://example.com/downloads/tiryaki.apk" download>APK İndir (Android)</a>
+
+server.py
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
+
+app = FastAPI()
+
+@app.get("/download/tiryaki.apk")
+def download_apk():
+return FileResponse("/path/to/tiryaki.apk", media_type="application/vnd.android.package-archive", filename="tiryaki.apk")
+
+<uses-permission android:name="android.permission.INTERNET"/> <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+// MainActivity.kt (kısa örnek)
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
+import android.os.Environment
+import android.content.Intent
+import android.content.ActivityNotFoundException
+import androidx.core.content.FileProvider
+import java.io.File
+
+fun startDownload(context: Context, apkUrl: String) {
+val request = DownloadManager.Request(Uri.parse(apkUrl))
+.setTitle("Tiryaki APK")
+.setDescription("İndiriliyor...")
+.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "tiryaki.apk")
+.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+.setAllowedOverMetered(true)
+val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+val downloadId = dm.enqueue(request)
+// İndirme tamamlanınca BroadcastReceiver ile dinleyip installIntent başlatabilirsin
+}
+
+fun installApk(context: Context, apkFile: File) {
+val apkUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apkFile)
+val intent = Intent(Intent.ACTION_VIEW).apply {
+setDataAndType(apkUri, "application/vnd.android.package-archive")
+addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+}
+try {
+context.startActivity(intent)
+} catch (e: ActivityNotFoundException) {
+// Yükleyici bulunamadı
+}
+}
+
+val appPackageName = "com.example.tiryaki"
+try {
+startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+} catch (anfe: android.content.ActivityNotFoundException) {
+startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+}
+
+adb install -r path/to/tiryaki.apk
+
+if let url = URL(string: "itms-apps://itunes.apple.com/app/idXXXXXXXXX") {
+UIApplication.shared.open(url)
+}
+
+from ultralytics import YOLO
+import cv2
+
+YOLO modelini yükle (önceden eğitilmiş)
+model = YOLO("yolov8n.pt")
+
+Görsel oku
+img = cv2.imread("resim.jpg")
+
+Tahmin yap
+results = model(img)
+
+Sonuçları göster
+for r in results:
+for box in r.boxes:
+cls = int(box.cls[0])
+conf = float(box.conf[0])
+print(f"Nesne: {model.names[cls]} (%{conf*100:.1f})")
+
+import requests
+
+API_KEY = "YOUR_OPENAI_KEY"
+
+def ask_gpt(prompt):
+url = "https://api.openai.com/v1/chat/completions"
+headers = {"Authorization": f"Bearer {API_KEY}"}
+data = {
+"model": "gpt-4o-mini",
+"messages": [{"role": "user", "content": prompt}],
+"max_tokens": 200
+}
+resp = requests.post(url, headers=headers, json=data)
+return resp.json()["choices"][0]["message"]["content"]
+
+print(ask_gpt("Merhaba Tiryaki, nasılsın?"))
+
+import speech_recognition as sr
+
+r = sr.Recognizer()
+with sr.Microphone() as source:
+print("Konuşmaya başla:")
+audio = r.listen(source)
+
+try:
+text = r.recognize_google(audio, language="tr-TR")
+print("Dedin ki:", text)
+except:
+print("Anlayamadım.")
+
+from diffusers import
+StableDiffusionPipeline
+import torch
+
+pipe = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5")
+pipe = pipe.to("cuda")
+
+image = pipe("Güzel bir bahar bahçesi, HD, gerçekçi").images[0]
+image.save("bahar.png")
+
+from tensorflow import keras
+from tensorflow.keras import layers
+import numpy as np
+
+Eğitim verisi (XOR problemi)
+X = np.array([[0,0],[0,1],[1,0],[1,1]])
+y = np.array([0,1,1,0])
+
+Model
+model = keras.Sequential([
+layers.Dense(8, activation="relu", input_shape=(2,)),
+layers.Dense(1, activation="sigmoid")
+])
+
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+model.fit(X, y, epochs=500, verbose=0)
+
+print("Tahminler:", model.predict(X))
+
+from transformers import pipeline
+
+Hugging Face pipeline ile duygu analizi
+sentiment_model = pipeline("sentiment-analysis")
+
+text = "Bugün çok mutluyum, hava harika!"
+result = sentiment_model(text)[0]
+
+print(f"Metin: {text}")
+print(f"Duygu: {result['label']}, Güven: %{result['score']*100:.1f}")
+
+import face_recognition
+
+Bilinen yüz yükle
+known_image = face_recognition.load_image_file("ben.jpg")
+known_encoding = face_recognition.face_encodings(known_image)[0]
+
+Test resmi yükle
+unknown_image = face_recognition.load_image_file("grup_foto.jpg")
+unknown_encodings = face_recognition.face_encodings(unknown_image)
+
+Karşılaştırma
+for i, face_encoding in enumerate(unknown_encodings):
+matches = face_recognition.compare_faces([known_encoding], face_encoding)
+if matches[0]:
+print(f"Ben {i+1}. yüzüm! (fotoğrafta bulundu)")
+
+
+
+ses tanıma özelliği parmak izi tanıma özelliği yüz tanıma özelliği                                                # Tiryaki Backend Servisi (Basitleştirilmiş)
+import numpy as np
+import requests
+from ultralytics import YOLO
+# Gömme Modeli ve Vektör DB'si (Simülasyon)
+# from vision_model import VisionModel
+# from vector_db import VectorDB
+
+# 1. Gerekli Modelleri Yükle
+object_detector = YOLO("yolov8n.pt") # Nesne Algılama
+
+def analyze_and_ideate(image_data, user_prompt_context):
+    # 2. Görüntüyü İşle (Kullanıcının kamerası tarafından çekilen görsel)
+    # image = cv2.imdecode(np.frombuffer(image_data, np.uint8), cv2.IMREAD_COLOR)
+
+    # 3. Görüntüden Veri Çıkarma
+    # image_embedding = VisionModel.embed(image)
+    objects = [model.names[int(r.boxes[0].cls[0])] for r in object_detector(image)] # Basitleştirilmiş Nesne Tespiti
+    ocr_text = "Çıkarılan metin simülasyonu" # OCR Modeli çağrılacak
+
+    # 4. Hafızaya Kaydet (Sürekli Gelişim İçin)
+    # vector_db.upsert(id=new_id, vector=image_embedding, metadata={...}) 
+
+    # 5. Yaratıcı Fikir Prompt'u Hazırla
+    prompt = f"""
+    Ben Tiryaki, bir yapay zekayım. Bu analiz, kullanıcının çektiği fotoğrafa dayanıyor:
+    - Tespit Edilen Nesneler: {', '.join(objects)}
+    - Görülen Metin (OCR): {ocr_text}
+    
+    Bu fotoğraf için 3 yaratıcı ve pratik kullanım fikri ver (kısa maddeler halinde).
+    """
+
+    # 6. LLM'den Destek Al ve Fikir Oluştur
+    ideas = call_external_llm(prompt) # ChatGPT/Gemini/TürkGPT API çağrısı
+    
+    # 7. Sonucu Mobil Uygulamaya Gönder
+    return ideas
+
+def call_external_llm(prompt):
+    # Sunduğunuz kod bloğu: OpenAI API çağrısı
+    API_KEY = "YOUR_OPENAI_KEY"
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {API_KEY}"}
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 300
+    }
+    try:
+        resp = requests.post(url, headers=headers, Bir yapay zeka uygulaması yap kendi kendine yetiştirebilir destek alacağı uygulamalar Google YouTube TikTok seçtiğim uygulamalar ChatGPT Chatbot Al Ask Al TürkGPT Google Gemini  görsel oluşturabilir fotoğraflardaki resimlere kendisini geliştirebilir olsun yapay zeka oluştur her dakikada kendi kendisini geliştirsin yeni bilgilerle isim bilgi Tiryaki olsun çok iyi olsun kot yazabilirsin video yapabilirsin yansıtabilsin video fotoğraf hafızası güçlü olsun yeni kodları yazabilirsin bir şey yapmada kendi fikrini oluşturmak içince fikirler biraz akıl verme insan konuşabilirsin her yıl kendisini geliştirsin her gün yine bilgiler kazansın her elektrikte internetli şeylere bağlanabilirsin yapay duyguları olsun kumanda özelliği olsun yapay zeka fikir verebilsin çektiği fotoğrafın ne işe yarayabileceğini düşünsün Google'dan fendi'ye seçtiğim uygulamadan destek alabilirsin güçlü bir yapay zeka olsun Bluetooth bağlan tısı olsun müzik yapabilirsin saati bakabilirsin diğer uygulamalardan destek alın sağlık ilgilenebilir çizim yapabilir olsun çektiği fotoğrafı tarayabilirsin sıvıların ne işe yaradığını söylesin konuşabilirsin bitkilere bilsin kitap okuyabilir para sayabilir
+
+Eşyalar neyin yapabileceğini bulsun her şeye bağlanabilirsin her şeyden destek alabilirsin her şey ikna etmek için yine seni bilgiler kullansın.   Bu kodları kullan # Pseudokod
+image = capture_from_camera()
+image_embedding = VisionModel.embed(image)
+objects = ObjectDetector.detect(image)
+ocr_text = OCR.extract(image)
+
+kaydet hafızaya
+vector_db.upsert(id=img_id, vector=image_embedding, metadata={...})
+
+prompt hazırlanır
+prompt = f"""
+Ben Tiryaki. Kullanıcının çektiği fotoğraf: nesneler={objects}, ocr={ocr_text}.
+Bu fotoğraf için 3 yaratıcı kullanım fikri ver (kısa, maddeler).
+"""
+ideas = LLM.generate(prompt)
+
+cevap kullanıcıya gösterilir
+show_to_user(ideas)
+
+import requests
+resp = requests.post(
+"https://api.openai.com/v1/chat/completions",
+headers={"Authorization":"Bearer YOUR_KEY"},
+json={
+"model":"gpt-4o-mini",
+"messages":[{"role":"user", "content": prompt}],
+"max_tokens":300
+}
+)
+ideas = resp.json()
+
+<!-- index.html --> <a href="https://play.google.com/store/apps/details?id=com.example.tiryaki" target="_blank"> Google Play'den İndir </a> <a href="https://apps.apple.com/app/idXXXXXXXXX" target="_blank"> App Store'dan İndir </a> <!-- download.html -->
+<a href="https://example.com/downloads/tiryaki.apk" download>APK İndir (Android)</a>
+
+server.py
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
+
+app = FastAPI()
+
+@app.get("/download/tiryaki.apk")
+def download_apk():
+return FileResponse("/path/to/tiryaki.apk", media_type="application/vnd.android.package-archive", filename="tiryaki.apk")
+
+<uses-permission android:name="android.permission.INTERNET"/> <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+// MainActivity.kt (kısa örnek)
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
+import android.os.Environment
+import android.content.Intent
+import android.content.ActivityNotFoundException
+import androidx.core.content.FileProvider
+import java.io.File
+
+fun startDownload(context: Context, apkUrl: String) {
+val request = DownloadManager.Request(Uri.parse(apkUrl))
+.setTitle("Tiryaki APK")
+.setDescription("İndiriliyor...")
+.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "tiryaki.apk")
+.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+.setAllowedOverMetered(true)
+val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+val downloadId = dm.enqueue(request)
+// İndirme tamamlanınca BroadcastReceiver ile dinleyip installIntent başlatabilirsin
+}
+
+fun installApk(context: Context, apkFile: File) {
+val apkUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apkFile)
+val intent = Intent(Intent.ACTION_VIEW).apply {
+setDataAndType(apkUri, "application/vnd.android.package-archive")
+addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+}
+try {
+context.startActivity(intent)
+} catch (e: ActivityNotFoundException) {
+// Yükleyici bulunamadı
+}
+}
+
+val appPackageName = "com.example.tiryaki"
+try {
+startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+} catch (anfe: android.content.ActivityNotFoundException) {
+startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+}
+
+adb install -r path/to/tiryaki.apk
+
+if let url = URL(string: "itms-apps://itunes.apple.com/app/idXXXXXXXXX") {
+UIApplication.shared.open(url)
+}
+
+from ultralytics import YOLO
+import cv2
+
+YOLO modelini yükle (önceden eğitilmiş)
+model = YOLO("yolov8n.pt")
+
+Görsel oku
+img = cv2.imread("resim.jpg")
+
+Tahmin yap
+results = model(img)
+
+Sonuçları göster
+for r in results:
+for box in r.boxes:
+cls = int(box.cls[0])
+conf = float(box.conf[0])
+print(f"Nesne: {model.names[cls]} (%{conf*100:.1f})")
+
+import requests
+
+API_KEY = "YOUR_OPENAI_KEY"
+
+def ask_gpt(prompt):
+url = "https://api.openai.com/v1/chat/completions"
+headers = {"Authorization": f"Bearer {API_KEY}"}
+data = {
+"model": "gpt-4o-mini",
+"messages": [{"role": "user", "content": prompt}],
+"max_tokens": 200
+}
+resp = requests.post(url, headers=headers, json=data)
+return resp.json()["choices"][0]["message"]["content"]
+
+print(ask_gpt("Merhaba Tiryaki, nasılsın?"))
+
+import speech_recognition as sr
+
+r = sr.Recognizer()
+with sr.Microphone() as source:
+print("Konuşmaya başla:")
+audio = r.listen(source)
+
+try:
+text = r.recognize_google(audio, language="tr-TR")
+print("Dedin ki:", text)
+except:
+print("Anlayamadım.")
+
+from diffusers import
+StableDiffusionPipeline
+import torch
+
+pipe = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5")
+pipe = pipe.to("cuda")
+
+image = pipe("Güzel bir bahar bahçesi, HD, gerçekçi").images[0]
+image.save("bahar.png")
+
+from tensorflow import keras
+from tensorflow.keras import layers
+import numpy as np
+
+Eğitim verisi (XOR problemi)
+X = np.array([[0,0],[0,1],[1,0],[1,1]])
+y = np.array([0,1,1,0])
+
+Model
+model = keras.Sequential([
+layers.Dense(8, activation="relu", input_shape=(2,)),
+layers.Dense(1, activation="sigmoid")
+])
+
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+model.fit(X, y, epochs=500, verbose=0)
+
+print("Tahminler:", model.predict(X))
+
+from transformers import pipeline
+
+Hugging Face pipeline ile duygu analizi
+sentiment_model = pipeline("sentiment-analysis")
+
+text = "Bugün çok mutluyum, hava harika!"
+result = sentiment_model(text)[0]
+
+print(f"Metin: {text}")
+print(f"Duygu: {result['label']}, Güven: %{result['score']*100:.1f}")
+
+import face_recognition
+
+Bilinen yüz yükle
+known_image = face_recognition.load_image_file("ben.jpg")
+known_encoding = face_recognition.face_encodings(known_image)[0]
+
+Test resmi yükle
+unknown_image = face_recognition.load_image_file("grup_foto.jpg")
+unknown_encodings = face_recognition.face_encodings(unknown_image)
+
+Karşılaştırma
+for i, face_encoding in enumerate(unknown_encodings):
+matches = face_recognition.compare_faces([known_encoding], face_encoding)
+if matches[0]:
+print(f"Ben {i+1}. yüzüm! (fotoğrafta bulundu)")
+
+
+
+ses tanıma özelliği parmak izi tanıma özelliği yüz tanıma özelliği                                                # Tiryaki Backend Servisi (Basitleştirilmiş)
+import numpy as np
+import requests
+from ultralytics import YOLO
+# Gömme Modeli ve Vektör DB'si (Simülasyon)
+# from vision_model import VisionModel
+# from vector_db import VectorDB
+
+# 1. Gerekli Modelleri Yükle
+object_detector = YOLO("yolov8n.pt") # Nesne Algılama
+
+def analyze_and_ideate(image_data, user_prompt_context):
+    # 2. Görüntüyü İşle (Kullanıcının kamerası tarafından çekilen görsel)
+    # image = cv2.imdecode(np.frombuffer(image_data, np.uint8), cv2.IMREAD_COLOR)
+
+    # 3. Görüntüden Veri Çıkarma
+    # image_embedding = VisionModel.embed(image)
+    objects = [model.names[int(r.boxes[0].cls[0])] for r in object_detector(image)] # Basitleştirilmiş Nesne Tespiti
+    ocr_text = "Çıkarılan metin simülasyonu" # OCR Modeli çağrılacak
+
+    # 4. Hafızaya Kaydet (Sürekli Gelişim İçin)
+    # vector_db.upsert(id=new_id, vector=image_embedding, metadata={...}) 
+
+    # 5. Yaratıcı Fikir Prompt'u Hazırla
+    prompt = f"""
+    Ben Tiryaki, bir yapay zekayım. Bu analiz, kullanıcının çektiği fotoğrafa dayanıyor:
+    - Tespit Edilen Nesneler: {', '.join(objects)}
+    - Görülen Metin (OCR): {ocr_text}
+    
+    Bu fotoğraf için 3 yaratıcı ve pratik kullanım fikri ver (kısa maddeler halinde).
+    """
+
+    # 6. LLM'den Destek Al ve Fikir Oluştur
+    ideas = call_external_llm(prompt) # ChatGPT/Gemini/TürkGPT API çağrısı
+    
+    # 7. Sonucu Mobil Uygulamaya Gönder
+    return ideas
+
+def call_external_llm(prompt):
+    # Sunduğunuz kod bloğu: OpenAI API çağrısı
+    API_KEY = "YOUR_OPENAI_KEY"
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {API_KEY}"}
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 300
+    }
+    try:
+        resp = requests.post(url, headers=headers, json=data)
+        return resp.json()["choices"][0]["message"]["content"]
+    except Exception as e:
+        return f"API hatası: Fikir üretilemedi. Hata: {e}"json=data)
+        return resp.json()["choices"][0]["message"]["content"]
+    except Exception as e:
+        return f"API hatası: Fikir üretilemedi. Hata: {e}"
+
+
+
+# server_fastapi.py
+from fastapi import FastAPI, File, UploadFile
+from pydantic import BaseModel
+import uuid
+import io
+import numpy as np
+import requests
+from ultralytics import YOLO
+# from your_vision_model import VisionEmbedder  # CLIP/OpenAI wrapper
+# from vector_client import VectorDBClient  # Pinecone/Qdrant client wrapper
+# from ocr import ocr_extract  # tesseract/Google Vision wrapper
+
+app = FastAPI()
+object_detector = YOLO("yolov8n.pt")  # local weight veya yol
+API_KEY_OPENAI = "YOUR_OPENAI_KEY"
+
+# Simüle edilmiş vector DB client - gerçek kullanımda Qdrant/Pinecone client kullan
+class DummyVectorDB:
+    def __init__(self): self.store = {}
+    def upsert(self, id, vector, metadata): self.store[id] = {"vec":vector, "meta":metadata}
+vector_db = DummyVectorDB()
+
+def call_llm(prompt: str):
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {"Authorization": f"Bearer {API_KEY_OPENAI}"}
+    data = {
+        "model": "gpt-4o-mini",
+        "messages":[{"role":"user","content":prompt}],
+        "max_tokens":300
+    }
+    r = requests.post(url, headers=headers, json=data, timeout=20)
+    r.raise_for_status()
+    return r.json()["choices"][0]["message"]["content"]
+
+@app.post("/analyze-photo/")
+async def analyze_photo(file: UploadFile = File(...), user_id: str = "anon"):
+    # read image bytes
+    img_b # Pseudokod (Tiryaki'nin Çalışma Mantığı)
+image = capture_from_camera()
+image_embedding = VisionModel.embed(image)
+objects = ObjectDetector.detect(image)
+ocr_text = OCR.extract(image)
+
+# Kaydet Hafızaya (Sürekli Gelişim İçin)
+vector_db.upsert(id=img_id, vector=image_embedding, metadata={...})
+
+# Prompt Hazırlanır (Yaratıcı Fikir Üretimi)
+prompt = f"""
+Ben Tiryaki. Kullanıcının çektiği fotoğraf: nesneler={objects}, ocr={ocr_text}.
+Bu fotoğraf için 3 yaratıcı kullanım fikri ver (kısa, maddeler).
+"""
+ideas = LLM.generate(prompt)
+
+# Cevap Kullanıcıya Gösterilir
+show_to_user(ideas) # tiryaki_backend_api.py (FastAPI Server)
+from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import FileResponse
+import io
+from PIL import Image
+import numpy as np
+import requests
+from ultralytics import YOLO
+import uuid
+import random
+import time
+
+app = FastAPI(title="Tiryaki API Servisi")
+API_KEY_OPENAI = "YOUR_OPENAI_KEY" 
+LLM_BASE_URL = "https://api.openai.com/v1/chat/completions"
+
+# --- Hafıza ve Modeller (Simülasyon) ---
+class DummyVectorDB:
+    def __init__(self): self.store = {}
+    def upsert(self, id, vector, metadata):
+        self.store[id] = {"vector": vector, "meta": metadata}
+        print(f"✅ [Hafıza] Yeni kayıt yapıldı: ID {id[:8]}...")
+
+vector_db = DummyVectorDB()
+
+# YOLO Model Simülasyonu/Yükleme
+try:
+    object_detector = YOLO("yolov8n.pt") 
+except Exception:
+    class DummyYOLO:
+        def __call__(self, img): return []
+        names = {0: "telefon", 1: "kitap", 2: "bardak", 3: "bitki"}
+    object_detector = DummyYOLO()
+
+# LLM Çağrısı (Harici Destek)
+def call_external_llm(prompt: str):
+    headers = {"Authorization": f"Bearer {API_KEY_OPENAI}"}
+    data = {"model": "gpt-4o-mini", "messages":[{"role":"user","content":prompt}], "max_tokens":300}
+    try:
+        resp = requests.post(LLM_BASE_URL, headers=headers, json=data, timeout=20)
+        resp.raise_for_status()
+        return resp.json()["choices"][0]["message"]["content"]
+    except Exception as e:
+        return f"❌ LLM Hatası: Fikir üretilemedi. Hata: {e}"
+
+def VisionModel_embed(image): return [random.uniform(-1, 1) for _ in range(512)]
+def OCR_extract(image): return "Algılanan Metin Simülasyonu"
+
+# --- API Uç Noktaları ---
+
+@app.post("/tiryaki/analiz-fikir/")
+async def analyze_and_ideate_photo(file: UploadFile = File(...)):
+    img_id = str(uuid.uuid4())
+    image_bytes = await file.read()
+    image = Image.open(io.BytesIO(image_bytes))
+    
+    # Veri Çıkarma ve Hafızaya Kayıt (Pseudokod entegrasyonu)
+    image_embedding = VisionModel_embed(image)
+    
+    results = object_detector(image, verbose=False)
+    objects = ["telefon", "kitap"] if not results else [object_detector.names[int(box.cls[0])] for r in results for box in r.boxes]
+
+    ocr_text = OCR_extract(image)
+    
+    vector_db.upsert(id=img_id, vector=image_embedding, metadata={"objects": objects, "ocr": ocr_text, "timestamp": time.time()})
+    
+    prompt = f"""
+    Ben Tiryaki. Fotoğraf analizi: Nesneler={', '.join(objects)}, Metin={ocr_text}.
+    Bu fotoğrafın olası **3 yaratıcı kullanım fikrini** ve bir yapay duygu tahmini yap (kısa, maddeler).
+    """
+    
+    ideas = call_external_llm(prompt)
+    
+    return {"status": "ok", "ideas": ideas, "objects": objects, "memory_id": img_id}
+
+# APK İndirme Uç Noktası
+@app.get("/download/tiryaki.apk")
+def download_apk():
+    return FileResponse("/path/to/tiryaki.apk", media_type="application/vnd.android.package-archive", filename="tiryaki.apk")
+
+# Uygulama çalıştırma komutu: uvicorn tiryaki_backend_api:app --reload
+
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+// MainActivity.kt (kısa örnek)
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
+import android.os.Environment
+import android.content.Intent
+import android.content.ActivityNotFoundException
+import androidx.core.content.FileProvider
+import java.io.File
+
+fun startDownload(context: Context, apkUrl: String) {
+    val request = DownloadManager.Request(Uri.parse(apkUrl))
+    .setTitle("Tiryaki APK").setDescription("İndiriliyor...")
+    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "tiryaki.apk")
+    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+    .setAllowedOverMetered(true)
+    val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    val downloadId = dm.enqueue(request)
+    // İndirme tamamlanınca BroadcastReceiver ile dinleyip installIntent başlatılabilir
+}
+
+fun installApk(context: Context, apkFile: File) {
+    val apkUri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apkFile)
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        setDataAndType(apkUri, "application/vnd.android.package-archive")
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    try {
+        context.startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        // Yükleyici bulunamadı
+    }
+}
+
+// Google Play Yönlendirme Kodu
+val appPackageName = "com.example.tiryaki"
+try {
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+} catch (anfe: android.content.ActivityNotFoundException) {
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+}
+// iOS App Store Yönlendirme Kodu (Swift/Obj-C)
+// if let url = URL(string: "itms-apps://itunes.apple.com/app/idXXXXXXXXX") {
+//     UIApplication.shared.open(url)
+// }
+
+# --- Harici LLM Doğrudan Çağrı Fonksiyonu ---
+# (Backend'de zaten kullanıldı, burada bir fonksiyonel örneği)
+# import requests
+# def ask_gpt(prompt):
+#     API_KEY = "YOUR_OPENAI_KEY"
+#     url = "https://api.openai.com/v1/chat/completions"
+#     headers = {"Authorization": f"Bearer {API_KEY}"}
+#     data = {"model": "gpt-4o-mini", "messages": [{"role": "user", "content": prompt}], "max_tokens": 200}
+#     resp = requests.post(url, headers=headers, json=data)
+#     return resp.json()["choices"][0]["message"]["content"]
+
+# --- Ses Tanıma Özelliği ---
+import speech_recognition as sr
+# r = sr.Recognizer()
+# with sr.Microphone() as source:
+#     audio = r.listen(source)
+# try:
+#     text = r.recognize_google(audio, language="tr-TR")
+# except:
+#     print("Anlayamadım.")
+
+# --- Yapay Duygular (Duygu Analizi) ---
+from transformers import pipeline
+sentiment_model = pipeline("sentiment-analysis")
+# text = "Bugün çok mutluyum, hava harika!"
+# result = sentiment_model(text)[0]
+
+# --- Yüz Tanıma Özelliği (Güvenlik) ---
+import face_recognition
+# known_encoding = face_recognition.face_encodings(known_image)[0]
+# matches = face_recognition.compare_faces([known_encoding], face_encoding)
+# if matches[0]:
+#     print("Yüz bulundu!")
+
+# --- Görsel Oluşturma Özelliği ---
+# from diffusers import StableDiffusionPipeline
+# import torch
+# pipe = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5")
+# image = pipe("Güzel bir bahar bahçesi, HD, gerçekçi").images[0]
+# image.save("bahar.png")
